@@ -27,10 +27,29 @@ android {
     compose = true
   }
 
+  val cannonsKeystoreFilePath: String? by project
+
+  signingConfigs {
+    register("release") {
+      val keystoreFile = cannonsKeystoreFilePath?.let { File(it) } ?: return@register
+
+      val cannonsKeystorePassword: String by project
+      val cannonsKeyAlias: String by project
+      val cannonsKeyPassword: String by project
+
+      storeFile = keystoreFile
+      storePassword = cannonsKeystorePassword
+      keyAlias = cannonsKeyAlias
+      keyPassword = cannonsKeyPassword
+    }
+  }
+
   buildTypes {
     named("release") {
       isMinifyEnabled = false
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+
+      signingConfig = signingConfigs.findByName("release")
     }
   }
 
