@@ -1,5 +1,5 @@
 plugins {
-  id("com.android.application")
+  id("com.android.library")
 
   kotlin("android")
   kotlin("kapt")
@@ -12,26 +12,14 @@ android {
   compileSdk = BuildValues.compileSdkVersion
 
   defaultConfig {
-    applicationId = "dev.muskelmekka.cannons"
-
     minSdk = BuildValues.minSdkVersion
     targetSdk = BuildValues.targetSdkVersion
-
-    versionCode = 1
-    versionName = "0.1.0"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
   buildFeatures {
     compose = true
-  }
-
-  buildTypes {
-    named("release") {
-      isMinifyEnabled = false
-      proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-    }
   }
 
   compileOptions {
@@ -63,19 +51,11 @@ android {
 
 dependencies {
   implementation(projects.dna)
-  implementation(projects.home)
 
   // Accompanist
   implementation(libs.accompanist.insets)
   implementation(libs.accompanist.insetsUi)
   implementation(libs.accompanist.navigation)
-
-  // AndroidX – Activity
-  implementation(libs.androidx.activity.activity)
-  implementation(libs.androidx.activity.compose)
-
-  // AndroidX – Appcompat
-  implementation(libs.androidx.appcompat)
 
   // AndroidX – Compose
   implementation(libs.androidx.compose.animation)
@@ -88,9 +68,6 @@ dependencies {
   implementation(libs.androidx.compose.ui.ui)
 
   androidTestImplementation(libs.androidx.compose.ui.test)
-
-  // AndroidX – Fragment
-  implementation(libs.androidx.fragment)
 
   // AndroidX – Hilt
   implementation(libs.androidx.hilt.viewModel)

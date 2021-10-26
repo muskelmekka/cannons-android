@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <string name="home_screen_title">Cannons</string>
+
+  <string name="home_section_header_next_up">Next up</string>
+  <string name="home_section_header_recent_workouts">Recent workouts</string>
+  <string name="home_next_up_card_start_now_button">Start now</string>
+  <string name="home_next_up_card_show_details_button">See details</string>
+
+</resources>

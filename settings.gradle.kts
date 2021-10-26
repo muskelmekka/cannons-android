@@ -40,3 +40,4 @@ rootProject.name = "cannons-android"
 
 include(":app")
 include(":dna")
+include(":home")

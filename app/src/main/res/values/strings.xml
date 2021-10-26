@@ -3,4 +3,9 @@
 
   <string name="app_name">Cannons</string>
 
+  <string name="bottom_nav_item_label_home">Home</string>
+  <string name="bottom_nav_item_label_history">History</string>
+  <string name="bottom_nav_item_label_programs">Programs</string>
+  <string name="bottom_nav_item_label_profile">Profile</string>
+
 </resources>
