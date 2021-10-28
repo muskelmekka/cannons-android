@@ -1,7 +1,5 @@
 plugins {
-  id("com.android.application")
-
-  id("com.google.gms.google-services")
+  id("com.android.library")
 
   kotlin("android")
   kotlin("kapt")
@@ -14,51 +12,16 @@ android {
   compileSdk = BuildValues.compileSdkVersion
 
   defaultConfig {
-    applicationId = "dev.muskelmekka.cannons"
-
     minSdk = BuildValues.minSdkVersion
     targetSdk = BuildValues.targetSdkVersion
 
-    versionCode = 1
-    versionName = "0.1.0"
-
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+    resourceConfigurations.add("en")
   }
 
   buildFeatures {
     compose = true
-  }
-
-  val cannonsKeystoreFilePath: String? by project
-
-  signingConfigs {
-    register("release") {
-      val keystoreFile = cannonsKeystoreFilePath?.let { File(it) } ?: return@register
-
-      val cannonsKeystorePassword: String by project
-      val cannonsKeyAlias: String by project
-      val cannonsKeyPassword: String by project
-
-      storeFile = keystoreFile
-      storePassword = cannonsKeystorePassword
-      keyAlias = cannonsKeyAlias
-      keyPassword = cannonsKeyPassword
-    }
-  }
-
-  buildTypes {
-    named("debug") {
-      isMinifyEnabled = false
-
-      applicationIdSuffix = ".debug"
-    }
-
-    named("release") {
-      isMinifyEnabled = true
-      proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-
-      signingConfig = signingConfigs.findByName("release")
-    }
   }
 
   compileOptions {
@@ -91,21 +54,12 @@ android {
 }
 
 dependencies {
-  implementation(projects.auth)
   implementation(projects.coreUi)
   implementation(projects.dna)
-  implementation(projects.home)
 
   // Accompanist
   implementation(libs.accompanist.insets)
   implementation(libs.accompanist.navigation)
-
-  // AndroidX – Activity
-  implementation(libs.androidx.activity.activity)
-  implementation(libs.androidx.activity.compose)
-
-  // AndroidX – Appcompat
-  implementation(libs.androidx.appcompat)
 
   // AndroidX – Compose
   implementation(libs.androidx.compose.animation)
@@ -118,9 +72,6 @@ dependencies {
   implementation(libs.androidx.compose.ui.ui)
 
   androidTestImplementation(libs.androidx.compose.ui.test)
-
-  // AndroidX – Fragment
-  implementation(libs.androidx.fragment)
 
   // AndroidX – Hilt
   implementation(libs.androidx.hilt.viewModel)
@@ -141,9 +92,8 @@ dependencies {
   implementation(libs.dagger.hilt.android)
   kapt(libs.dagger.hilt.compiler)
 
-  // Firebase
-  implementation(platform(libs.firebase.bom))
-  implementation(libs.firebase.analytics)
+  // Firebase UI
+  implementation(libs.firebase.ui.auth)
 
   // JUnit 4
   androidTestImplementation(libs.junit4)
