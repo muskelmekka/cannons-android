@@ -70,6 +70,8 @@ android {
 
   kotlinOptions {
     jvmTarget = "1.8"
+
+    freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
   }
 
   lint {
@@ -87,12 +89,12 @@ android {
 }
 
 dependencies {
+  implementation(projects.coreUi)
   implementation(projects.dna)
   implementation(projects.home)
 
   // Accompanist
   implementation(libs.accompanist.insets)
-  implementation(libs.accompanist.insetsUi)
   implementation(libs.accompanist.navigation)
 
   // AndroidX – Activity
@@ -105,7 +107,7 @@ dependencies {
   // AndroidX – Compose
   implementation(libs.androidx.compose.animation)
   implementation(libs.androidx.compose.foundation)
-  implementation(libs.androidx.compose.material.material)
+  implementation(libs.androidx.compose.material.material3)
   implementation(libs.androidx.compose.material.icons.core)
   implementation(libs.androidx.compose.material.icons.extended)
   implementation(libs.androidx.compose.runtime)

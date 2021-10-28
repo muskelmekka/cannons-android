@@ -39,5 +39,6 @@ dependencyResolutionManagement {
 rootProject.name = "cannons-android"
 
 include(":app")
+include(":core-ui")
 include(":dna")
 include(":home")
