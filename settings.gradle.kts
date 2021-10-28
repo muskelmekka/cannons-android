@@ -19,8 +19,9 @@ pluginManagement {
 
   resolutionStrategy {
     eachPlugin {
-      if (requested.id.id == "dagger.hilt.android.plugin") {
-        useModule("com.google.dagger:hilt-android-gradle-plugin:2.39.1")
+      when (requested.id.id) {
+        "com.google.gms.google-services" -> useModule("com.google.gms:google-services:4.3.10")
+        "dagger.hilt.android.plugin" -> useModule("com.google.dagger:hilt-android-gradle-plugin:2.39.1")
       }
     }
   }

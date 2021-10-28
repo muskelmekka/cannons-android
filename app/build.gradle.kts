@@ -1,6 +1,8 @@
 plugins {
   id("com.android.application")
 
+  id("com.google.gms.google-services")
+
   kotlin("android")
   kotlin("kapt")
 
@@ -137,6 +139,10 @@ dependencies {
   // Dagger – Hilt
   implementation(libs.dagger.hilt.android)
   kapt(libs.dagger.hilt.compiler)
+
+  // Firebase
+  implementation(platform(libs.firebase.bom))
+  implementation(libs.firebase.analytics)
 
   // JUnit 4
   androidTestImplementation(libs.junit4)
