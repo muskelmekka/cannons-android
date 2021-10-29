@@ -1,10 +1,16 @@
 package dev.muskelmekka.cannons.app.main
 
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CalendarToday
+import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.CalendarToday
 import androidx.compose.material.icons.outlined.History
+import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -12,6 +18,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
@@ -27,48 +34,83 @@ import dev.muskelmekka.cannons.profile.ProfileScreen
 @OptIn(ExperimentalAnimationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen() {
-  AppTheme {
-    val navController = rememberAnimatedNavController()
+  val state = rememberMainScreenState(rememberAnimatedNavController())
 
+  AppTheme {
     Scaffold(
       bottomBar = {
         NavigationBar(contentPadding = rememberInsetsPaddingValues(LocalWindowInsets.current.navigationBars)) {
           NavigationBarItem(
-            icon = { Icon(Icons.Default.Home, contentDescription = null) },
+            icon = {
+              if (state.navigation.currentPage == MainScreenNavigationState.Page.Home) {
+                Icon(Icons.Filled.Home, contentDescription = null)
+              } else {
+                Icon(Icons.Outlined.Home, contentDescription = null)
+              }
+            },
             label = { Text(stringResource(R.string.bottom_nav_item_label_home)) },
-            selected = true,
-            onClick = {},
+            selected = state.navigation.currentPage == MainScreenNavigationState.Page.Home,
+            onClick = { state.navigation.navigateTo(MainScreenNavigationState.Page.Home) },
           )
 
           NavigationBarItem(
-            icon = { Icon(Icons.Outlined.History, contentDescription = null) },
+            icon = {
+              if (state.navigation.currentPage == MainScreenNavigationState.Page.History) {
+                Icon(Icons.Filled.History, contentDescription = null)
+              } else {
+                Icon(Icons.Outlined.History, contentDescription = null)
+              }
+            },
             label = { Text(stringResource(R.string.bottom_nav_item_label_history)) },
-            selected = false,
-            onClick = {},
+            selected = state.navigation.currentPage == MainScreenNavigationState.Page.History,
+            onClick = { state.navigation.navigateTo(MainScreenNavigationState.Page.History) },
           )
 
           NavigationBarItem(
-            icon = { Icon(Icons.Outlined.CalendarToday, contentDescription = null) },
+            icon = {
+              if (state.navigation.currentPage == MainScreenNavigationState.Page.Programs) {
+                Icon(Icons.Filled.CalendarToday, contentDescription = null)
+              } else {
+                Icon(Icons.Outlined.CalendarToday, contentDescription = null)
+              }
+            },
             label = { Text(stringResource(R.string.bottom_nav_item_label_programs)) },
-            selected = false,
-            onClick = {},
+            selected = state.navigation.currentPage == MainScreenNavigationState.Page.Programs,
+            onClick = { state.navigation.navigateTo(MainScreenNavigationState.Page.Programs) },
           )
 
           NavigationBarItem(
-            icon = { Icon(Icons.Outlined.Person, contentDescription = null) },
+            icon = {
+              if (state.navigation.currentPage == MainScreenNavigationState.Page.Profile) {
+                Icon(Icons.Filled.Person, contentDescription = null)
+              } else {
+                Icon(Icons.Outlined.Person, contentDescription = null)
+              }
+            },
             label = { Text(stringResource(R.string.bottom_nav_item_label_profile)) },
-            selected = false,
-            onClick = {},
+            selected = state.navigation.currentPage == MainScreenNavigationState.Page.Profile,
+            onClick = { state.navigation.navigateTo(MainScreenNavigationState.Page.Profile) },
           )
         }
       },
     ) {
-      AnimatedNavHost(navController, startDestination = "/home") {
-        composable("/home") {
+      AnimatedNavHost(
+        navController = state.navigation.navHostController,
+        startDestination = MainScreenNavigationState.Page.Home.route,
+      ) {
+        composable(MainScreenNavigationState.Page.Home.route) {
           HomeScreen()
         }
 
-        composable("/profile") {
+        composable(MainScreenNavigationState.Page.History.route) {
+          Box(Modifier.fillMaxSize())
+        }
+
+        composable(MainScreenNavigationState.Page.Programs.route) {
+          Box(Modifier.fillMaxSize())
+        }
+
+        composable(MainScreenNavigationState.Page.Profile.route) {
           ProfileScreen()
         }
       }
