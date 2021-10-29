@@ -41,6 +41,11 @@ rootProject.name = "cannons-android"
 
 include(":app")
 include(":auth")
+include(":auth:auth-models")
+project(":auth:auth-models").projectDir = File("auth/auth-models")
 include(":core-ui")
 include(":dna")
 include(":home")
+include(":profile")
+include(":profile:profile-models")
+project(":profile:profile-models").projectDir = File("profile/profile-models")

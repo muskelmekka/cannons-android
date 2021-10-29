@@ -57,7 +57,8 @@ dependencies {
 
   // Accompanist
   implementation(libs.accompanist.insets)
-  implementation(libs.accompanist.navigation)
+  implementation(libs.accompanist.navigation.animation)
+  implementation(libs.accompanist.navigation.material)
 
   // AndroidX – Compose
   implementation(libs.androidx.compose.animation)
@@ -73,6 +74,7 @@ dependencies {
 
   // AndroidX – Hilt
   implementation(libs.androidx.hilt.viewModel)
+  implementation(libs.androidx.hilt.navigation.compose)
 
   // AndroidX – Test
   androidTestImplementation(libs.androidx.test.core)

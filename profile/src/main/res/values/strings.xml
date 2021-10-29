@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <string name="profile_screen_title">Profile</string>
+
+  <string name="profile_header_anonymous">Anonymous</string>
+  <string name="cd_profile_header_avatar">Profile Avatar</string>
+
+</resources>
