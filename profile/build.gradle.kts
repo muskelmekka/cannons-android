@@ -1,7 +1,5 @@
 plugins {
-  id("com.android.application")
-
-  id("com.google.gms.google-services")
+  id("com.android.library")
 
   kotlin("android")
   kotlin("kapt")
@@ -14,51 +12,14 @@ android {
   compileSdk = BuildValues.compileSdkVersion
 
   defaultConfig {
-    applicationId = "dev.muskelmekka.cannons"
-
     minSdk = BuildValues.minSdkVersion
     targetSdk = BuildValues.targetSdkVersion
-
-    versionCode = 2
-    versionName = "0.2.0"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
   buildFeatures {
     compose = true
-  }
-
-  val cannonsKeystoreFilePath: String? by project
-
-  signingConfigs {
-    register("release") {
-      val keystoreFile = cannonsKeystoreFilePath?.let { File(it) } ?: return@register
-
-      val cannonsKeystorePassword: String by project
-      val cannonsKeyAlias: String by project
-      val cannonsKeyPassword: String by project
-
-      storeFile = keystoreFile
-      storePassword = cannonsKeystorePassword
-      keyAlias = cannonsKeyAlias
-      keyPassword = cannonsKeyPassword
-    }
-  }
-
-  buildTypes {
-    named("debug") {
-      isMinifyEnabled = false
-
-      applicationIdSuffix = ".debug"
-    }
-
-    named("release") {
-      isMinifyEnabled = true
-      proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-
-      signingConfig = signingConfigs.findByName("release")
-    }
   }
 
   compileOptions {
@@ -73,6 +34,7 @@ android {
   kotlinOptions {
     jvmTarget = "1.8"
 
+    freeCompilerArgs = freeCompilerArgs + "-Xjvm-default=all"
     freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
   }
 
@@ -94,20 +56,12 @@ dependencies {
   implementation(projects.auth)
   implementation(projects.coreUi)
   implementation(projects.dna)
-  implementation(projects.home)
-  implementation(projects.profile)
+  api(projects.profile.profileModels)
 
   // Accompanist
   implementation(libs.accompanist.insets)
   implementation(libs.accompanist.navigation.animation)
   implementation(libs.accompanist.navigation.material)
-
-  // AndroidX – Activity
-  implementation(libs.androidx.activity.activity)
-  implementation(libs.androidx.activity.compose)
-
-  // AndroidX – Appcompat
-  implementation(libs.androidx.appcompat)
 
   // AndroidX – Compose
   implementation(libs.androidx.compose.animation)
@@ -121,11 +75,9 @@ dependencies {
 
   androidTestImplementation(libs.androidx.compose.ui.test)
 
-  // AndroidX – Fragment
-  implementation(libs.androidx.fragment)
-
   // AndroidX – Hilt
   implementation(libs.androidx.hilt.viewModel)
+  implementation(libs.androidx.hilt.navigation.compose)
 
   // AndroidX – Test
   androidTestImplementation(libs.androidx.test.core)
@@ -135,6 +87,9 @@ dependencies {
   // AndroidX – Test – Espresso
   androidTestImplementation(libs.androidx.test.espresso.core)
 
+  // Coil
+  implementation(libs.coil.compose)
+
   // Dagger
   kapt(libs.dagger.compiler)
   implementation(libs.dagger.dagger)
@@ -142,11 +97,6 @@ dependencies {
   // Dagger – Hilt
   implementation(libs.dagger.hilt.android)
   kapt(libs.dagger.hilt.compiler)
-
-  // Firebase
-  implementation(platform(libs.firebase.bom))
-  implementation(libs.firebase.analytics)
-  implementation(libs.firebase.auth)
 
   // JUnit 4
   androidTestImplementation(libs.junit4)
@@ -161,4 +111,7 @@ dependencies {
   // Kotlinx – Coroutines
   implementation(libs.kotlinx.coroutines.android)
   implementation(libs.kotlinx.coroutines.core)
+
+  // Material Design Components
+  implementation(libs.google.material)
 }

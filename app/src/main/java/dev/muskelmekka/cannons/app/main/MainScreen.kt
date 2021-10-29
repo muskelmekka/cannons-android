@@ -1,5 +1,6 @@
 package dev.muskelmekka.cannons.app.main
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.outlined.CalendarToday
@@ -14,15 +15,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
+import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.animation.composable
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import dev.muskelmekka.cannons.app.R
 import dev.muskelmekka.cannons.core.ui.insetsui.NavigationBar
 import dev.muskelmekka.cannons.dna.AppTheme
 import dev.muskelmekka.cannons.home.HomeScreen
+import dev.muskelmekka.cannons.profile.ProfileScreen
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalAnimationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen() {
   AppTheme {
+    val navController = rememberAnimatedNavController()
+
     Scaffold(
       bottomBar = {
         NavigationBar(contentPadding = rememberInsetsPaddingValues(LocalWindowInsets.current.navigationBars)) {
@@ -56,7 +63,15 @@ fun MainScreen() {
         }
       },
     ) {
-      HomeScreen()
+      AnimatedNavHost(navController, startDestination = "/home") {
+        composable("/home") {
+          HomeScreen()
+        }
+
+        composable("/profile") {
+          ProfileScreen()
+        }
+      }
     }
   }
 }
