@@ -20,10 +20,6 @@ android {
     resourceConfigurations.add("en")
   }
 
-  buildFeatures {
-    compose = true
-  }
-
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
@@ -54,35 +50,8 @@ android {
 }
 
 dependencies {
-  implementation(projects.coreUi)
+  api(projects.auth.authModels)
   implementation(projects.dna)
-
-  // Accompanist
-  implementation(libs.accompanist.insets)
-  implementation(libs.accompanist.navigation)
-
-  // AndroidX – Compose
-  implementation(libs.androidx.compose.animation)
-  implementation(libs.androidx.compose.foundation)
-  implementation(libs.androidx.compose.material.material3)
-  implementation(libs.androidx.compose.material.icons.core)
-  implementation(libs.androidx.compose.material.icons.extended)
-  implementation(libs.androidx.compose.runtime)
-  implementation(libs.androidx.compose.ui.tooling)
-  implementation(libs.androidx.compose.ui.ui)
-
-  androidTestImplementation(libs.androidx.compose.ui.test)
-
-  // AndroidX – Hilt
-  implementation(libs.androidx.hilt.viewModel)
-
-  // AndroidX – Test
-  androidTestImplementation(libs.androidx.test.core)
-  androidTestImplementation(libs.androidx.test.rules)
-  androidTestImplementation(libs.androidx.test.runner)
-
-  // AndroidX – Test – Espresso
-  androidTestImplementation(libs.androidx.test.espresso.core)
 
   // Dagger
   kapt(libs.dagger.compiler)
@@ -95,17 +64,6 @@ dependencies {
   // Firebase UI
   implementation(libs.firebase.ui.auth)
 
-  // JUnit 4
-  androidTestImplementation(libs.junit4)
-
-  // JUnit 5
-  testImplementation(libs.junit5.jupiter.api)
-  testRuntimeOnly(libs.junit5.jupiter.engine)
-
   // Kotlin
   implementation(libs.kotlin.stdLib)
-
-  // Kotlinx – Coroutines
-  implementation(libs.kotlinx.coroutines.android)
-  implementation(libs.kotlinx.coroutines.core)
 }
