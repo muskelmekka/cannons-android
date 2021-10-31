@@ -1,6 +1,5 @@
 package dev.muskelmekka.cannons.profile
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -33,23 +32,21 @@ fun ProfileScreen(viewModel: ProfileViewModel = hiltViewModel()) {
         contentPadding = rememberInsetsPaddingValues(LocalWindowInsets.current.statusBars),
         title = { Text(stringResource(R.string.profile_screen_title)) },
         actions = {
-          AnimatedVisibility(profile != null) {
-            IconButton(modifier = Modifier.padding(end = 16.dp), onClick = { }) {
-              Image(
-                modifier = Modifier
-                  .size(32.dp)
-                  .clip(CircleShape),
-                painter = rememberImagePainter(
-                  data = null,
-                  builder = {
-                    placeholder(R.drawable.avatar_placeholder)
-                    fallback(R.drawable.avatar_placeholder)
-                    error(R.drawable.avatar_placeholder)
-                  },
-                ),
-                contentDescription = stringResource(R.string.cd_profile_header_avatar),
-              )
-            }
+          IconButton(modifier = Modifier.padding(end = 16.dp), onClick = { }) {
+            Image(
+              modifier = Modifier
+                .size(32.dp)
+                .clip(CircleShape),
+              painter = rememberImagePainter(
+                data = profile?.avatarUrl,
+                builder = {
+                  placeholder(R.drawable.avatar_placeholder)
+                  fallback(R.drawable.avatar_placeholder)
+                  error(R.drawable.avatar_placeholder)
+                },
+              ),
+              contentDescription = stringResource(R.string.cd_profile_header_avatar),
+            )
           }
         },
       )
