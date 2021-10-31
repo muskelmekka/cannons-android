@@ -20,4 +20,8 @@ class AuthRepository @Inject constructor(
       isEmailVerified = userInfo?.isEmailVerified == true,
     )
   }
+
+  fun signOut() {
+    firebaseAuth.signOut()
+  }
 }
