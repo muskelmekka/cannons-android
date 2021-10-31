@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -32,22 +31,21 @@ fun ProfileScreen(viewModel: ProfileViewModel = hiltViewModel()) {
         contentPadding = rememberInsetsPaddingValues(LocalWindowInsets.current.statusBars),
         title = { Text(stringResource(R.string.profile_screen_title)) },
         actions = {
-          IconButton(modifier = Modifier.padding(end = 16.dp), onClick = { }) {
-            Image(
-              modifier = Modifier
-                .size(32.dp)
-                .clip(CircleShape),
-              painter = rememberImagePainter(
-                data = profile?.avatarUrl,
-                builder = {
-                  placeholder(R.drawable.avatar_placeholder)
-                  fallback(R.drawable.avatar_placeholder)
-                  error(R.drawable.avatar_placeholder)
-                },
-              ),
-              contentDescription = stringResource(R.string.cd_profile_header_avatar),
-            )
-          }
+          Image(
+            modifier = Modifier
+              .padding(end = 16.dp)
+              .size(32.dp)
+              .clip(CircleShape),
+            painter = rememberImagePainter(
+              data = profile?.avatarUrl,
+              builder = {
+                placeholder(R.drawable.avatar_placeholder)
+                fallback(R.drawable.avatar_placeholder)
+                error(R.drawable.avatar_placeholder)
+              },
+            ),
+            contentDescription = stringResource(R.string.cd_profile_header_avatar),
+          )
         },
       )
     },
