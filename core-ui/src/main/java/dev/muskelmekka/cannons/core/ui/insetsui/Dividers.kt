@@ -15,7 +15,7 @@ fun Divider(modifier: Modifier = Modifier) {
     modifier
       .fillMaxWidth()
       .height(1.dp)
-      .background(MaterialTheme.colorScheme.onSurface.copy(alpha = DividerAlpha))
+      .background(MaterialTheme.colorScheme.onSurface.copy(alpha = DividerAlpha)),
   )
 }
 

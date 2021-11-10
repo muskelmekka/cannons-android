@@ -11,7 +11,9 @@ allprojects {
       "indent_size" to "2",
       "indent_style" to "space",
       "insert_final_newline" to "true",
-      "max_line_length" to "120"
+      "max_line_length" to "120",
+      "ij_kotlin_allow_trailing_comma" to "true",
+      "ij_kotlin_allow_trailing_comma_on_call_site" to "true",
     )
 
     kotlin {

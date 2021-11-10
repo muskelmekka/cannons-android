@@ -24,7 +24,7 @@ fun SmallTopAppBar(
   Surface(
     color = colors.containerColor(0f).value,
     tonalElevation = 1.dp,
-    modifier = modifier
+    modifier = modifier,
   ) {
     androidx.compose.material3.SmallTopAppBar(
       title = title,

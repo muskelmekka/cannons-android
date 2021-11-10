@@ -25,14 +25,14 @@ fun NavigationBar(
   Surface(
     color = containerColor,
     tonalElevation = tonalElevation,
-    modifier = modifier
+    modifier = modifier,
   ) {
     NavigationBar(
       containerColor = Color.Transparent,
       contentColor = contentColor,
       tonalElevation = 0.dp,
       modifier = Modifier.padding(contentPadding),
-      content = content
+      content = content,
     )
   }
 }
