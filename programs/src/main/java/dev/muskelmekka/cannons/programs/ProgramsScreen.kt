@@ -103,27 +103,18 @@ private fun ProgramCard(modifier: Modifier = Modifier, program: Program) {
 private fun Workouts(modifier: Modifier = Modifier, workouts: List<Workout>) {
   Column(modifier, verticalArrangement = Arrangement.spacedBy(4.dp)) {
     for (workout in workouts) {
-      val nameAndWorkoutsText = buildAnnotatedString {
-        append("${workout.name} (")
+      val numberOfOtherMuscles = workout.otherMuscles.size
 
-        withStyle(SpanStyle(fontStyle = FontStyle.Italic)) {
-          val muscleText = if (workout.otherMuscles.isEmpty()) {
-            workout.mainMuscle
-          } else {
-            val quantity = workout.otherMuscles.size
-
-            LocalContext.current.resources.getQuantityString(
-              R.plurals.programs_card_main_muscle_and_others,
-              quantity,
-              workout.mainMuscle,
-              quantity,
-            )
-          }
-
-          append(muscleText)
-        }
-
-        append(")")
+      val nameAndWorkoutsText = if (numberOfOtherMuscles == 0) {
+        stringResource(R.string.programs_card_workout_name_with_only_main_muscle, workout.name, workout.mainMuscle)
+      } else {
+        LocalContext.current.resources.getQuantityString(
+          R.plurals.programs_card_workout_name_with_main_muscle_and_others,
+          numberOfOtherMuscles,
+          workout.name,
+          workout.mainMuscle,
+          numberOfOtherMuscles,
+        )
       }
 
       Text(nameAndWorkoutsText, style = MaterialTheme.typography.bodySmall)

@@ -3,9 +3,11 @@
 
   <string name="programs_screen_title">Programs</string>
 
-  <plurals name="programs_card_main_muscle_and_others">
-    <item quantity="one">%1$s + %2$d other</item>
-    <item quantity="other">%1$s + %2$d others</item>
+  <string name="programs_card_workout_name_with_only_main_muscle">%1$s (%2$s)</string>
+
+  <plurals name="programs_card_workout_name_with_main_muscle_and_others">
+    <item quantity="one">%1$s (%2$s + %3$d other)</item>
+    <item quantity="other">%1$s (%2$s + %3$d others)</item>
   </plurals>
 
   <string name="programs_card_start_now_button">Start now</string>
