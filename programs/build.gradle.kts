@@ -1,7 +1,5 @@
 plugins {
-  id("com.android.application")
-
-  id("com.google.gms.google-services")
+  id("com.android.library")
 
   kotlin("android")
   kotlin("kapt")
@@ -14,51 +12,14 @@ android {
   compileSdk = BuildValues.compileSdkVersion
 
   defaultConfig {
-    applicationId = "dev.muskelmekka.cannons"
-
     minSdk = BuildValues.minSdkVersion
     targetSdk = BuildValues.targetSdkVersion
-
-    versionCode = 3
-    versionName = "0.3.0"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
   buildFeatures {
     compose = true
-  }
-
-  val cannonsKeystoreFilePath: String? by project
-
-  signingConfigs {
-    register("release") {
-      val keystoreFile = cannonsKeystoreFilePath?.let { File(it) } ?: return@register
-
-      val cannonsKeystorePassword: String by project
-      val cannonsKeyAlias: String by project
-      val cannonsKeyPassword: String by project
-
-      storeFile = keystoreFile
-      storePassword = cannonsKeystorePassword
-      keyAlias = cannonsKeyAlias
-      keyPassword = cannonsKeyPassword
-    }
-  }
-
-  buildTypes {
-    named("debug") {
-      isMinifyEnabled = false
-
-      applicationIdSuffix = ".debug"
-    }
-
-    named("release") {
-      isMinifyEnabled = true
-      proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-
-      signingConfig = signingConfigs.findByName("release")
-    }
   }
 
   compileOptions {
@@ -79,9 +40,6 @@ android {
   lint {
     htmlOutput = File("$buildDir/reports/lint/lint-results.html")
     xmlOutput = File("$buildDir/reports/lint/lint-results.xml")
-
-    disable("DialogFragmentCallbacksDetector", "ObsoleteLintCustomCheck")
-    warning("ConvertToWebp")
   }
 
   packagingOptions {
@@ -91,24 +49,15 @@ android {
 }
 
 dependencies {
-  implementation(projects.auth)
   implementation(projects.coreUi)
   implementation(projects.dna)
-  implementation(projects.home)
-  implementation(projects.profile)
-  implementation(projects.programs)
+  implementation(projects.programs.programsModels)
 
   // Accompanist
   implementation(libs.accompanist.insets)
   implementation(libs.accompanist.navigation.animation)
   implementation(libs.accompanist.navigation.material)
-
-  // AndroidX – Activity
-  implementation(libs.androidx.activity.activity)
-  implementation(libs.androidx.activity.compose)
-
-  // AndroidX – Appcompat
-  implementation(libs.androidx.appcompat)
+  implementation(libs.accompanist.placeholder)
 
   // AndroidX – Compose
   implementation(libs.androidx.compose.animation)
@@ -122,11 +71,9 @@ dependencies {
 
   androidTestImplementation(libs.androidx.compose.ui.test)
 
-  // AndroidX – Fragment
-  implementation(libs.androidx.fragment)
-
   // AndroidX – Hilt
   implementation(libs.androidx.hilt.viewModel)
+  implementation(libs.androidx.hilt.navigation.compose)
 
   // AndroidX – Test
   androidTestImplementation(libs.androidx.test.core)
@@ -146,8 +93,6 @@ dependencies {
 
   // Firebase
   implementation(platform(libs.firebase.bom))
-  implementation(libs.firebase.analytics)
-  implementation(libs.firebase.auth)
   implementation(libs.firebase.firestore)
 
   // JUnit 4
@@ -163,4 +108,5 @@ dependencies {
   // Kotlinx – Coroutines
   implementation(libs.kotlinx.coroutines.android)
   implementation(libs.kotlinx.coroutines.core)
+  implementation(libs.kotlinx.coroutines.playServices)
 }

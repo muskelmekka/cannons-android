@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <string name="programs_screen_title">Programs</string>
+
+  <plurals name="programs_card_main_muscle_and_others">
+    <item quantity="one">%1$s + %2$d other</item>
+    <item quantity="other">%1$s + %2$d others</item>
+  </plurals>
+
+  <string name="programs_card_start_now_button">Start now</string>
+  <string name="programs_card_show_details_button">See details</string>
+
+</resources>
