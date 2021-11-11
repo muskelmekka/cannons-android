@@ -41,8 +41,14 @@ private suspend fun DocumentSnapshot.toProgram(id: String): Program = coroutineS
 }
 
 private suspend fun DocumentSnapshot.toWorkout(id: String): Workout = coroutineScope {
-  val exercisesSnapshot = reference.collection("exercises").get().await()
-  val exercises = exercisesSnapshot.documents.map { async { it.toExercise(it.id) } }
+  val exercisesList = get("exercises") as List<Map<String, DocumentReference>>? ?: emptyList()
+
+  val exercises = exercisesList.map {
+    async {
+      val documentReference = it.getValue("exerciseRef")
+      documentReference.get().await().toExercise(documentReference.id)
+    }
+  }
 
   Workout(
     id = id,
@@ -53,14 +59,11 @@ private suspend fun DocumentSnapshot.toWorkout(id: String): Workout = coroutineS
   )
 }
 
-private suspend fun DocumentSnapshot.toExercise(id: String): Exercise {
-  val documentReference = requireNotNull(getDocumentReference("exerciseRef"))
-  val exerciseSnapshot = documentReference.get().await()
-
+private fun DocumentSnapshot.toExercise(id: String): Exercise {
   return Exercise(
     id = id,
-    name = requireNotNull(exerciseSnapshot.getString("name")),
-    equipment = requireNotNull(exerciseSnapshot.getString("equipment")),
-    muscle = requireNotNull(exerciseSnapshot.getString("muscle")),
+    name = requireNotNull(getString("name")),
+    equipment = requireNotNull(getString("equipment")),
+    muscle = requireNotNull(getString("muscle")),
   )
 }
