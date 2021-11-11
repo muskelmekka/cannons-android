@@ -30,6 +30,7 @@ import dev.muskelmekka.cannons.core.ui.insetsui.NavigationBar
 import dev.muskelmekka.cannons.dna.AppTheme
 import dev.muskelmekka.cannons.home.HomeScreen
 import dev.muskelmekka.cannons.profile.ProfileScreen
+import dev.muskelmekka.cannons.programs.ProgramsScreen
 
 @OptIn(ExperimentalAnimationApi::class, ExperimentalMaterial3Api::class)
 @Composable
@@ -107,7 +108,7 @@ fun MainScreen() {
         }
 
         composable(MainScreenNavigationState.Page.Programs.route) {
-          Box(Modifier.fillMaxSize())
+          ProgramsScreen()
         }
 
         composable(MainScreenNavigationState.Page.Profile.route) {
