@@ -49,6 +49,7 @@ android {
 }
 
 dependencies {
+  implementation(projects.auth)
   implementation(projects.coreUi)
   implementation(projects.dna)
   implementation(projects.programs.programsModels)

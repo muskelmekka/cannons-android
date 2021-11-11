@@ -1,7 +1,9 @@
 package dev.muskelmekka.cannons.programs
 
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import dev.muskelmekka.cannons.auth.AuthRepository
 import dev.muskelmekka.cannons.programs.models.Exercise
 import dev.muskelmekka.cannons.programs.models.Program
 import dev.muskelmekka.cannons.programs.models.Workout
@@ -13,9 +15,13 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class ProgramsRepository @Inject constructor(private val firestore: FirebaseFirestore) {
+class ProgramsRepository @Inject constructor(
+  private val firestore: FirebaseFirestore,
+  private val authRepository: AuthRepository,
+) {
   suspend fun getPrograms(): List<Program> = withContext(Dispatchers.IO) {
-    val snapshot = firestore.collection("programs").get().await()
+    val uid = authRepository.requireCurrentUser().uid
+    val snapshot = firestore.collection("users/$uid/programs").get().await()
 
     val programs = snapshot.documents.map { async { it.toProgram(it.id) } }
 
@@ -35,8 +41,14 @@ private suspend fun DocumentSnapshot.toProgram(id: String): Program = coroutineS
 }
 
 private suspend fun DocumentSnapshot.toWorkout(id: String): Workout = coroutineScope {
-  val exercisesSnapshot = reference.collection("exercises").get().await()
-  val exercises = exercisesSnapshot.documents.map { async { it.toExercise(it.id) } }
+  val exercisesList = get("exercises") as List<Map<String, DocumentReference>>? ?: emptyList()
+
+  val exercises = exercisesList.map {
+    async {
+      val documentReference = it.getValue("exerciseRef")
+      documentReference.get().await().toExercise(documentReference.id)
+    }
+  }
 
   Workout(
     id = id,
@@ -47,14 +59,11 @@ private suspend fun DocumentSnapshot.toWorkout(id: String): Workout = coroutineS
   )
 }
 
-private suspend fun DocumentSnapshot.toExercise(id: String): Exercise {
-  val documentReference = requireNotNull(getDocumentReference("exerciseRef"))
-  val exerciseSnapshot = documentReference.get().await()
-
+private fun DocumentSnapshot.toExercise(id: String): Exercise {
   return Exercise(
     id = id,
-    name = requireNotNull(exerciseSnapshot.getString("name")),
-    equipment = requireNotNull(exerciseSnapshot.getString("equipment")),
-    muscle = requireNotNull(exerciseSnapshot.getString("muscle")),
+    name = requireNotNull(getString("name")),
+    equipment = requireNotNull(getString("equipment")),
+    muscle = requireNotNull(getString("muscle")),
   )
 }
