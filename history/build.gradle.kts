@@ -64,6 +64,7 @@ dependencies {
   implementation(libs.accompanist.insets)
   implementation(libs.accompanist.navigation.animation)
   implementation(libs.accompanist.navigation.material)
+  implementation(libs.accompanist.placeholder)
 
   // Android
   coreLibraryDesugaring(libs.android.desugarJdkLibs)

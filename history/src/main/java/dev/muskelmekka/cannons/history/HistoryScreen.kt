@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -26,6 +27,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.navigationBarsHeight
 import com.google.accompanist.insets.rememberInsetsPaddingValues
+import com.google.accompanist.placeholder.PlaceholderHighlight
+import com.google.accompanist.placeholder.fade
+import com.google.accompanist.placeholder.placeholder
 import dev.muskelmekka.cannons.core.ui.insetsui.SmallTopAppBar
 import dev.muskelmekka.cannons.dna.AppTheme
 import dev.muskelmekka.cannons.history.models.CompletedExercise
@@ -42,14 +46,12 @@ import kotlin.time.ExperimentalTime
 
 @Composable
 fun HistoryScreen(viewModel: HistoryViewModel = hiltViewModel()) {
-  val recentWorkouts = viewModel.recentWorkouts
-
-  HistoryScreen(recentWorkouts)
+  HistoryScreen(viewModel.isLoading, viewModel.recentWorkouts)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun HistoryScreen(recentWorkouts: List<RecentWorkout>?) {
+private fun HistoryScreen(isLoading: Boolean, recentWorkouts: List<RecentWorkout>?) {
   Scaffold(
     topBar = {
       SmallTopAppBar(
@@ -59,8 +61,47 @@ private fun HistoryScreen(recentWorkouts: List<RecentWorkout>?) {
     },
     bottomBar = { Spacer(Modifier.navigationBarsHeight()) },
   ) { contentPadding ->
-    if (recentWorkouts != null) {
+    if (isLoading) {
+      MockWorkoutsList(contentPadding)
+    } else if (recentWorkouts != null) {
       RecentWorkoutsList(contentPadding, recentWorkouts)
+    }
+  }
+}
+
+@Composable
+private fun MockWorkoutsList(contentPadding: PaddingValues) {
+  LazyColumn(contentPadding = contentPadding) {
+    items(5) {
+      Row(
+        Modifier
+          .fillMaxWidth()
+          .padding(16.dp),
+      ) {
+        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+          Text(
+            modifier = Modifier.placeholder(
+              visible = true,
+              shape = RoundedCornerShape(12.dp),
+              color = MaterialTheme.colorScheme.onBackground.copy(alpha = .1f),
+              highlight = PlaceholderHighlight.fade(MaterialTheme.colorScheme.onBackground.copy(alpha = .2f)),
+            ),
+            text = "Armageddon",
+            style = MaterialTheme.typography.bodyLarge,
+          )
+
+          Text(
+            modifier = Modifier.placeholder(
+              visible = true,
+              shape = RoundedCornerShape(12.dp),
+              color = MaterialTheme.colorScheme.onBackground.copy(alpha = .1f),
+              highlight = PlaceholderHighlight.fade(MaterialTheme.colorScheme.onBackground.copy(alpha = .2f)),
+            ),
+            text = "Mon, Nov 1 2021, 12:00, 45 minutes",
+            style = MaterialTheme.typography.bodyMedium,
+          )
+        }
+      }
     }
   }
 }
@@ -133,7 +174,7 @@ private fun Preview() {
   )
 
   AppTheme {
-    HistoryScreen(recentWorkouts = recentWorkouts)
+    HistoryScreen(isLoading = false, recentWorkouts)
   }
 }
 

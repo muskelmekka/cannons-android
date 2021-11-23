@@ -14,6 +14,9 @@ import javax.inject.Inject
 class HistoryViewModel @Inject constructor(
   private val repository: HistoryRepository,
 ) : ViewModel() {
+  var isLoading: Boolean by mutableStateOf(false)
+    private set
+
   var recentWorkouts: List<RecentWorkout>? by mutableStateOf(null)
     private set
 
@@ -23,7 +26,11 @@ class HistoryViewModel @Inject constructor(
 
   private fun loadRecentWorkouts() {
     viewModelScope.launch {
+      isLoading = true
+
       recentWorkouts = repository.getRecentWorkouts()
+
+      isLoading = false
     }
   }
 }
