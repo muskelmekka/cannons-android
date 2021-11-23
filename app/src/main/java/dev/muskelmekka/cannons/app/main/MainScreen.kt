@@ -1,8 +1,6 @@
 package dev.muskelmekka.cannons.app.main
 
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.History
@@ -18,7 +16,6 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
@@ -28,6 +25,7 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import dev.muskelmekka.cannons.app.R
 import dev.muskelmekka.cannons.core.ui.insetsui.NavigationBar
 import dev.muskelmekka.cannons.dna.AppTheme
+import dev.muskelmekka.cannons.history.HistoryScreen
 import dev.muskelmekka.cannons.home.HomeScreen
 import dev.muskelmekka.cannons.profile.ProfileScreen
 import dev.muskelmekka.cannons.programs.ProgramsScreen
@@ -104,7 +102,7 @@ fun MainScreen() {
         }
 
         composable(MainScreenNavigationState.Page.History.route) {
-          Box(Modifier.fillMaxSize())
+          HistoryScreen()
         }
 
         composable(MainScreenNavigationState.Page.Programs.route) {

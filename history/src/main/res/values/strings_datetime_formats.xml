@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <!-- E.g. Monday, November 1 2021, 13:00 -->
+  <string name="date_time_format_long">EEE, MMM d yyyy, HH:mm</string>
+
+</resources>
