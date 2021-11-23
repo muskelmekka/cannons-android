@@ -23,6 +23,8 @@ android {
   }
 
   compileOptions {
+    isCoreLibraryDesugaringEnabled = true
+
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
   }
@@ -63,6 +65,9 @@ dependencies {
   implementation(libs.accompanist.navigation.animation)
   implementation(libs.accompanist.navigation.material)
 
+  // Android
+  coreLibraryDesugaring(libs.android.desugarJdkLibs)
+
   // AndroidX – Compose
   implementation(libs.androidx.compose.animation)
   implementation(libs.androidx.compose.foundation)
@@ -98,6 +103,10 @@ dependencies {
   implementation(libs.dagger.hilt.android)
   kapt(libs.dagger.hilt.compiler)
 
+  // Firebase
+  implementation(platform(libs.firebase.bom))
+  implementation(libs.firebase.firestore)
+
   // JUnit 4
   androidTestImplementation(libs.junit4)
 
@@ -111,6 +120,10 @@ dependencies {
   // Kotlinx – Coroutines
   implementation(libs.kotlinx.coroutines.android)
   implementation(libs.kotlinx.coroutines.core)
+  implementation(libs.kotlinx.coroutines.playServices)
+
+  // Kotlinx – DateTime
+  implementation(libs.kotlinx.datetime)
 
   // Material Design Components
   implementation(libs.google.material)

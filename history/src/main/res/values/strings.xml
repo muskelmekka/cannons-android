@@ -3,4 +3,6 @@
 
   <string name="history_screen_title">History</string>
 
+  <string name="history_recent_workout_item_duration">%d minutes</string>
+
 </resources>

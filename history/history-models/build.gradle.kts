@@ -17,6 +17,8 @@ android {
   }
 
   compileOptions {
+    isCoreLibraryDesugaringEnabled = true
+
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
   }
@@ -39,6 +41,9 @@ android {
 }
 
 dependencies {
+  // Android
+  coreLibraryDesugaring(libs.android.desugarJdkLibs)
+
   // AndroidX – Hilt
   implementation(libs.androidx.hilt.viewModel)
   implementation(libs.androidx.hilt.navigation.compose)
@@ -60,4 +65,7 @@ dependencies {
 
   // Kotlinx – Coroutines
   implementation(libs.kotlinx.coroutines.core)
+
+  // Kotlinx – DateTime
+  implementation(libs.kotlinx.datetime)
 }
